@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "rankingBeers_database.db";
     //TODO
     //some nice refactor - move this shit to enum..
-    static final String BEERS_TABLE_NAME = "beers";
+    public static final String BEERS_TABLE_NAME = "beers";
     static final String COMMA = ", ";
     static final String OPTIONS_TEXT = "TEXT";
     static final String OPTIONS_INTEGER = "INTEGER";
@@ -21,16 +21,16 @@ public class DbHelper extends SQLiteOpenHelper {
     static final String OPTIONS_LONG = "LONG";
 
     static final String ID_COL = "id";
-    static final String BEER_NAME = "beerName";
-    static final String BEER_TYPE = "beerType";
-    static final String ALC_CONTENT = "alcContent";
-    static final String EXT_CONTENT = "extContent";
-    static final String COMPOSITION = "composition";
-    static final String PRICE = "price";
-    static final String UNIT_CAPACITY = "unitCapacity";
-    static final String BARCODE = "barcode";
-    static final String BUY_PLACE = "buyPlace";
-    static final String COMMENT = "comment";
+    public static final String BEER_NAME = "beerName";
+    public static final String BEER_TYPE = "beerType";
+    public static final String ALC_CONTENT = "alcContent";
+    public static final String EXT_CONTENT = "extContent";
+    public static final String COMPOSITION = "composition";
+    public static final String PRICE = "price";
+    public static final String UNIT_CAPACITY = "unitCapacity";
+    public static final String BARCODE = "barcode";
+    public static final String BUY_PLACE = "buyPlace";
+    public static final String COMMENT = "comment";
 
 
     public DbHelper(Context context) {

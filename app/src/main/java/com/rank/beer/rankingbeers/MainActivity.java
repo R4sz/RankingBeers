@@ -2,10 +2,15 @@ package com.rank.beer.rankingbeers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.Toast;
+
+import com.rank.beer.rankingbeers.db.DbHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,6 +47,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         view = findViewById(R.id.exit);
         view.setOnClickListener((View.OnClickListener) this);
+    }
+
+    public void test(View v) {
+        DbHelper database;
+        database = new DbHelper(this);
+        try {
+            SQLiteDatabase bd = database.getReadableDatabase();
+            Cursor kursor = bd.rawQuery("SELECT beerName from beers"  , null);
+        }
+
     }
 
 }
