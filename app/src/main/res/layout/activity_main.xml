@@ -25,7 +25,8 @@
         android:layout_weight="1"
         android:text="Przeglgadaj piwa"
         android:id="@+id/listBeers"
-        android:textSize="25dp"/>
+        android:textSize="25dp"
+        android:onClick="test"/>
     <Button
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

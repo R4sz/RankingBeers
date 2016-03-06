@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonConfig.append(R.id.addBeer, AddBeerActivity.class);
+        buttonConfig.append(R.id.listBeers, ListBeerActivity.class);
         initButtons();
 
     }
@@ -45,4 +46,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 }
-
