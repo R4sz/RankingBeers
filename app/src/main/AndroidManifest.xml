@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddBeerActivity"></activity>
+        <activity android:name=".AddBeerActivity" />
+        <activity android:name=".ListBeerActivity"></activity>
     </application>
 
 </manifest>
