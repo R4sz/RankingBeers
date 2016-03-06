@@ -53,6 +53,7 @@ public class AddBeerActivity extends AppCompatActivity {
             values.put(dbf.toString(), editTxtData.get(dbf.toString()).getText().toString());
         }
         bd.insertOrThrow(DbHelper.BEERS_TABLE_NAME, null, values);
+        finish();
     }
 
     public void cancel(View v) {

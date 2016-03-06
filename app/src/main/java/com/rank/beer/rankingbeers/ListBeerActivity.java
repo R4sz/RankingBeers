@@ -27,7 +27,7 @@ public class ListBeerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_beer);
-        getListViewData(BEER_LIST_QUERY);
+        initListView(getListViewData(BEER_LIST_QUERY));
     }
 
 
@@ -64,5 +64,6 @@ public class ListBeerActivity extends AppCompatActivity {
             dbHelp.close();
         }
 
+        return listOfBeers;
     }
 }

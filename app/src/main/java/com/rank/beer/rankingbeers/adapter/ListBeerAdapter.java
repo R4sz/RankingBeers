@@ -1,11 +1,13 @@
 package com.rank.beer.rankingbeers.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-import com.rank.beer.rankingbeers.ListBeerActivity;
+import com.rank.beer.rankingbeers.R;
 import com.rank.beer.rankingbeers.repo.BeerRepo;
 
 import java.util.List;
@@ -19,7 +21,6 @@ public class ListBeerAdapter extends BaseAdapter {
     private List<BeerRepo> listOfBeers;
 
 
-
     public ListBeerAdapter() {
     }
 
@@ -30,7 +31,7 @@ public class ListBeerAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return listOfBeers.size();
     }
 
     @Override
@@ -45,6 +46,24 @@ public class ListBeerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        entry = listOfBeers.get(position);
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.beer_listing, null);
+        }
+
+        TextView name = (TextView) convertView.findViewById(R.id.beerNameOnList);
+        name.setText(entry.getName());
+
+        TextView composition = (TextView) convertView.findViewById(R.id.compositionOnList);
+        composition.setText(entry.getComposition());
+
+        TextView alcContent = (TextView) convertView.findViewById(R.id.alcOnList);
+        alcContent.setText(entry.getAlcContent());
+
+        TextView price = (TextView) convertView.findViewById(R.id.priceOnList);
+        price.setText(entry.getPrice());
+
+        return convertView;
     }
 }

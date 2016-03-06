@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10sp"
+    android:paddingRight="10sp"
+    android:paddingTop="2sp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/beerNameOnList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="b/d nazwa" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/compositionOnList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sklad b/d" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/priceOnList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="cena b/d" />
+
+
+        <TextView
+            android:id="@+id/alcOnList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="alc b/d" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
