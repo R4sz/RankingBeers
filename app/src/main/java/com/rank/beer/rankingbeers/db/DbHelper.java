@@ -3,6 +3,7 @@ package com.rank.beer.rankingbeers.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 /**
  * Created by rasz on 2016-03-05.
@@ -10,17 +11,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "rankingBeers_database.db";
+    private static final String DB_NAME = "rankingBeers_databaseTmp.db";
     //TODO
     //some nice refactor - move this shit to enum..
-    public static final String BEERS_TABLE_NAME = "beers";
-    static final String COMMA = ", ";
-    static final String OPTIONS_TEXT = "TEXT";
-    static final String OPTIONS_INTEGER = "INTEGER";
-    static final String OPTIONS_DOUBLE = "DOUBLE";
-    static final String OPTIONS_LONG = "LONG";
 
-    static final String ID_COL = "id";
+    static final String COMMA = ", ";
+    public static final String BEERS_TABLE_NAME = "beers";
+    static final String CREATE_TABLE = "CREATE TABLE " + BEERS_TABLE_NAME + " (";
+    static final String ID_COL_INIT = "id INTEGER PRIMARY KEY,";
+    static final String CLOSE_QUERY = ");";
+
     public static final String BEER_NAME = "beerName";
     public static final String BEER_TYPE = "beerType";
     public static final String ALC_CONTENT = "alcContent";
@@ -39,19 +39,32 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + BEERS_TABLE_NAME + " ("
-                        + ID_COL + " INTEGER PRIMARY KEY, "
-                        + BEER_NAME + " " + OPTIONS_TEXT + COMMA
-                        + BEER_TYPE + " " + OPTIONS_TEXT + COMMA
-                        + ALC_CONTENT + " " + OPTIONS_DOUBLE + COMMA
-                        + EXT_CONTENT + " " + OPTIONS_DOUBLE + COMMA
-                        + COMPOSITION + " " + OPTIONS_TEXT + COMMA
-                        + PRICE + " " + OPTIONS_DOUBLE + COMMA
-                        + UNIT_CAPACITY + " " + OPTIONS_DOUBLE + COMMA
-                        + BARCODE + " " + OPTIONS_LONG + COMMA
-                        + BUY_PLACE + " " + OPTIONS_TEXT + COMMA
-                        + COMMENT + " " + OPTIONS_TEXT + " );"
-        );
+        sqLiteDatabase.execSQL(getSqlCreateDbQuery());
+    }
+
+    @NonNull
+    private String getSqlCreateDbQuery() {
+        StringBuilder query = new StringBuilder();
+        query.append(CREATE_TABLE);
+        query.append(ID_COL_INIT);
+        for (DbFields dbf : DbFields.values()) {
+            query.append(dbf.toString() + " " + dbf.getDataType() + COMMA);
+        }
+        int ind = query.lastIndexOf(COMMA);
+        return (query.replace(ind, ind + 1, CLOSE_QUERY)).toString();
+
+//        return "CREATE TABLE " + BEERS_TABLE_NAME + " ("
+//                        + ID_COL + " INTEGER PRIMARY KEY, "
+//                        + BEER_NAME + " " + OPTIONS_TEXT + COMMA
+//                        + BEER_TYPE + " " + OPTIONS_TEXT + COMMA
+//                        + ALC_CONTENT + " " + OPTIONS_DOUBLE + COMMA
+//                        + EXT_CONTENT + " " + OPTIONS_DOUBLE + COMMA
+//                        + COMPOSITION + " " + OPTIONS_TEXT + COMMA
+//                        + PRICE + " " + OPTIONS_DOUBLE + COMMA
+//                        + UNIT_CAPACITY + " " + OPTIONS_DOUBLE + COMMA
+//                        + BARCODE + " " + OPTIONS_LONG + COMMA
+//                        + BUY_PLACE + " " + OPTIONS_TEXT + COMMA
+//                        + COMMENT + " " + OPTIONS_TEXT + " );";
     }
 
     @Override
