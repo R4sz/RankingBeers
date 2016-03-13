@@ -15,42 +15,32 @@ import java.util.Map;
 
 public class AddBeerActivity extends AppCompatActivity {
 
-    private final Map<String, EditText> editTxtData = new HashMap<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
-
     }
 
     public void save(View v) {
-        initFields();
-        saveAndExit();
+        saveAndExit(initFields());
     }
 
-    //TODO will change (or maybe not) during refactor DbHelper (add enum)
-    private void initFields() {
-        editTxtData.put(DbFields.BEER_NAME.toString(), (EditText) findViewById(R.id.beerNameInp));
-        editTxtData.put(DbFields.BEER_TYPE.toString(), (EditText) findViewById(R.id.beerTypeInp));
-        editTxtData.put(DbFields.ALC_CONTENT.toString(), (EditText) findViewById(R.id.alcContentInp));
-        editTxtData.put(DbFields.EXT_CONTENT.toString(), (EditText) findViewById(R.id.extContentInp));
-        editTxtData.put(DbFields.COMPOSITION.toString(), (EditText) findViewById(R.id.compositionInp));
-        editTxtData.put(DbFields.PRICE.toString(), (EditText) findViewById(R.id.priceInp));
-        editTxtData.put(DbFields.UNIT_CAPACITY.toString(), (EditText) findViewById(R.id.unitCapacityInp));
-        editTxtData.put(DbFields.BARCODE.toString(), (EditText) findViewById(R.id.barcodeInp));
-        editTxtData.put(DbFields.BUY_PLACE.toString(), (EditText) findViewById(R.id.buyPlaceInp));
-        editTxtData.put(DbFields.COMMENT.toString(), (EditText) findViewById(R.id.commentInp));
+    private Map<String, EditText> initFields() {
+        Map<String, EditText> editTxtData = new HashMap<>();
+        for (DbFields dbf : DbFields.values()) {
+            editTxtData.put(dbf.toString(), (EditText) findViewById(dbf.getEdTxtId()));
+        }
+        return editTxtData;
 
     }
 
     //should be boolean with errors handling support!
-    private void saveAndExit() {
+    private void saveAndExit(Map<String, EditText> editTextData) {
         DbHelper dbh = new DbHelper(this);
         ContentValues values = new ContentValues();
         SQLiteDatabase bd = dbh.getWritableDatabase();
         for (DbFields dbf : DbFields.values()) {
-            values.put(dbf.toString(), editTxtData.get(dbf.toString()).getText().toString());
+            values.put(dbf.toString(), editTextData.get(dbf.toString()).getText().toString());
         }
         bd.insertOrThrow(DbHelper.BEERS_TABLE_NAME, null, values);
         finish();
