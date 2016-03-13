@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rank.beer.rankingbeers.R;
@@ -51,6 +52,9 @@ public class ListBeerAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.beer_listing, null);
         }
+
+        ImageView iv_logo = (ImageView) convertView.findViewById(R.id.list_avatar);
+        iv_logo.setImageResource(R.drawable.beer_bottle);
 
         TextView name = (TextView) convertView.findViewById(R.id.beerNameOnList);
         name.setText(entry.getName());
