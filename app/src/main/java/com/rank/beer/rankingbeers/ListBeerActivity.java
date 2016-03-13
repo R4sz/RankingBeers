@@ -56,7 +56,6 @@ public class ListBeerActivity extends AppCompatActivity {
             while (cr.moveToNext()) {
                 listOfBeers.add(new BeerRepo(cr));
             }
-
         } finally {
             dbHelp.close();
         }
