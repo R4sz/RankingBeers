@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonConfig.append(R.id.addBeer, AddBeerActivity.class);
         buttonConfig.append(R.id.listBeers, ListBeerActivity.class);
         initButtons();
+        //test android studio git integration
 
     }
 
