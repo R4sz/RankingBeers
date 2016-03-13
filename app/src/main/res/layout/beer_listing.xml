@@ -3,30 +3,25 @@
     android:id="@+id/LinearLayout01"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="10sp"
     android:paddingRight="10sp"
     android:paddingTop="2sp">
 
-    <ImageView
-        android:id="@+id/list_avatar"
-        android:layout_width="40dip"
-        android:layout_height="55dip"
-        android:layout_weight="0.1" />
-
-
     <LinearLayout
-        android:paddingLeft="5sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight=".9"
-        android:orientation="vertical">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/beerNameOnList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="b/d nazwa" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/compositionOnList"
@@ -35,25 +30,27 @@
             android:text="sklad b/d" />
 
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/priceOnList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="cena b/d" />
-
-
-            <TextView
-                android:id="@+id/alcOnList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="alc b/d" />
-
-
-        </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/priceOnList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="cena b/d" />
+
+
+        <TextView
+            android:id="@+id/alcOnList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="alc b/d" />
+
+
+    </LinearLayout>
+
 </LinearLayout>
