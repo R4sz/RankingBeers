@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.rank.beer.rankingbeers.MainActivity;
-import com.rank.beer.rankingbeers.R;
 import com.rank.beer.rankingbeers.adapter.ListBeerAdapter;
 import com.rank.beer.rankingbeers.db.DbHelper;
 import com.rank.beer.rankingbeers.repo.BeerRepo;
@@ -21,7 +18,7 @@ import java.util.List;
 
 public class ListBeerActivity extends AppCompatActivity {
 
-    private static final String BEER_LIST_QUERY = "SELECT beerName, price, composition, alcContent FROM beers";
+    private static final String BEER_LIST_QUERY = "SELECT id, beerName, price, composition, alcContent FROM beers";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +28,7 @@ public class ListBeerActivity extends AppCompatActivity {
     }
 
 
-    private void initListView(List<BeerRepo> beersList) {
+    private void initListView(final List<BeerRepo> beersList) {
         ListView list = (ListView) findViewById(R.id.ListView01);
         list.setClickable(true);
 
@@ -39,9 +36,9 @@ public class ListBeerActivity extends AppCompatActivity {
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View view, int position, long index) {
-               // Intent td = new Intent(getApplicationContext(), MainActivity.class);
-                //td.putExtra("position", position);
-               // startActivity(td);
+                Intent td = new Intent(getApplicationContext(), BeerDetailsActivity.class);
+                td.putExtra("id", beersList.get(position).getId());
+                startActivity(td);
             }
         });
         list.setAdapter(adapter);

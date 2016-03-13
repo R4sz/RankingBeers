@@ -52,19 +52,6 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         int ind = query.lastIndexOf(COMMA);
         return (query.replace(ind, ind + 1, CLOSE_QUERY)).toString();
-
-//        return "CREATE TABLE " + BEERS_TABLE_NAME + " ("
-//                        + ID_COL + " INTEGER PRIMARY KEY, "
-//                        + BEER_NAME + " " + OPTIONS_TEXT + COMMA
-//                        + BEER_TYPE + " " + OPTIONS_TEXT + COMMA
-//                        + ALC_CONTENT + " " + OPTIONS_DOUBLE + COMMA
-//                        + EXT_CONTENT + " " + OPTIONS_DOUBLE + COMMA
-//                        + COMPOSITION + " " + OPTIONS_TEXT + COMMA
-//                        + PRICE + " " + OPTIONS_DOUBLE + COMMA
-//                        + UNIT_CAPACITY + " " + OPTIONS_DOUBLE + COMMA
-//                        + BARCODE + " " + OPTIONS_LONG + COMMA
-//                        + BUY_PLACE + " " + OPTIONS_TEXT + COMMA
-//                        + COMMENT + " " + OPTIONS_TEXT + " );";
     }
 
     @Override

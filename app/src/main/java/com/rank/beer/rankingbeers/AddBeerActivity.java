@@ -15,34 +15,32 @@ import java.util.Map;
 
 public class AddBeerActivity extends AppCompatActivity {
 
-    private final Map<String, EditText> editTxtData = new HashMap<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
-
     }
 
     public void save(View v) {
-        initFields();
-        saveAndExit();
+        saveAndExit(initFields());
     }
 
-    private void initFields() {
+    private Map<String, EditText> initFields() {
+        Map<String, EditText> editTxtData = new HashMap<>();
         for (DbFields dbf : DbFields.values()) {
             editTxtData.put(dbf.toString(), (EditText) findViewById(dbf.getEdTxtId()));
         }
+        return editTxtData;
 
     }
 
     //should be boolean with errors handling support!
-    private void saveAndExit() {
+    private void saveAndExit(Map<String, EditText> editTextData) {
         DbHelper dbh = new DbHelper(this);
         ContentValues values = new ContentValues();
         SQLiteDatabase bd = dbh.getWritableDatabase();
         for (DbFields dbf : DbFields.values()) {
-            values.put(dbf.toString(), editTxtData.get(dbf.toString()).getText().toString());
+            values.put(dbf.toString(), editTextData.get(dbf.toString()).getText().toString());
         }
         bd.insertOrThrow(DbHelper.BEERS_TABLE_NAME, null, values);
         finish();
