@@ -1,17 +1,24 @@
 package com.rank.beer.rankingbeers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rank.beer.rankingbeers.R;
+import com.rank.beer.rankingbeers.db.DbFields;
 import com.rank.beer.rankingbeers.db.DbHelper;
 import com.rank.beer.rankingbeers.repo.BeerRepo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BeerDetailsActivity extends AppCompatActivity {
 
@@ -26,33 +33,33 @@ public class BeerDetailsActivity extends AppCompatActivity {
     }
 
     private void initElements() {
+        Map<String, TextView> txtViewData = new HashMap<>();
+        for (DbFields dbf : DbFields.values()) {
+            txtViewData.put(dbf.toString(), (TextView) findViewById(dbf.getEdTxtId()));
+        }
         Intent ListBeer = getIntent();
-        fillView(getData(query.replace("?", ListBeer.getStringExtra("id"))));
+        fillView(query.replace("?", ListBeer.getStringExtra("id")), txtViewData);
     }
 
-    private void fillView(BeerRepo data) {
-        //TO DO
-    }
-
-    private BeerRepo getData(String query) {
-        BeerRepo beerDetails = null;
-
+    private void fillView(String query, Map<String, TextView> txtViewData) {
+        Cursor cr = null;
         DbHelper dbHelp;
         dbHelp = new DbHelper(this);
         try {
             SQLiteDatabase bd = dbHelp.getReadableDatabase();
-            Cursor cr = bd.rawQuery(query, null);
+            cr = bd.rawQuery(query, null);
             while (cr.moveToNext()) {
-                beerDetails = new BeerRepo(cr);
+                for (DbFields dbf : DbFields.values()) {
+                    txtViewData.get(dbf.toString()).setText(cr.getString(cr.getColumnIndex(dbf.toString())));
+                }
             }
 
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             dbHelp.close();
         }
-
-        return beerDetails;
     }
-
 
 }
 
