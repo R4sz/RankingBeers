@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "rankingBeers_databaseTmp.db";
+    private static final String DB_NAME = "rankingBeers_databaseTmp2.db";
     //TODO
     //some nice refactor - move this shit to enum..
 

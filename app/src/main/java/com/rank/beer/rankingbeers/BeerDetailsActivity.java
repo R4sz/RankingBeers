@@ -35,7 +35,7 @@ public class BeerDetailsActivity extends AppCompatActivity {
     private void initElements() {
         Map<String, TextView> txtViewData = new HashMap<>();
         for (DbFields dbf : DbFields.values()) {
-            txtViewData.put(dbf.toString(), (TextView) findViewById(dbf.getEdTxtId()));
+            txtViewData.put(dbf.toString(), (TextView) findViewById(dbf.getViewId()));
         }
         Intent ListBeer = getIntent();
         fillView(query.replace("?", ListBeer.getStringExtra("id")), txtViewData);
