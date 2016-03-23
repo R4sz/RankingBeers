@@ -75,7 +75,7 @@ public class AddBeerActivity extends AppCompatActivity {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-            byte[] bmpArray = bos.toByteArray();
+            bmpArray = bos.toByteArray();
         }
     }
 
@@ -86,7 +86,7 @@ public class AddBeerActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         SQLiteDatabase bd = dbh.getWritableDatabase();
         for (DbFields dbf : DbFields.values()) {
-            if(dbf.getDataType().equals(DbFields.DEFAULT_DISPLAY_TYPE)) {
+            if(dbf.getType().equals(DbFields.DEFAULT_DISPLAY_TYPE)) {
                 values.put(dbf.toString(), ((EditText) editTextData.get(dbf.toString())).getText().toString());
             } else {
                 values.put(dbf.toString(), bmpArray);
