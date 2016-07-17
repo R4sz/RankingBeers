@@ -9,7 +9,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    protected static SparseArray<Class<? extends Activity>> buttonConfig = new SparseArray<Class<? extends Activity>>();
+    protected static SparseArray<Class<? extends Activity>> buttonConfig = new SparseArray<>();
 
 
     @Override
@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonConfig.append(R.id.addBeer, AddBeerActivity.class);
         buttonConfig.append(R.id.listBeers, ListBeerActivity.class);
         initButtons();
-        //test android studio git integration
 
     }
 
@@ -34,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void initButtons() {
-        int key = 0;
-        View view = null;
+        int key;
+        View view;
         for (int i = 0; i < buttonConfig.size(); i++) {
             key = buttonConfig.keyAt(i);
             view = findViewById(key);
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         view = findViewById(R.id.exit);
-        view.setOnClickListener((View.OnClickListener) this);
+        view.setOnClickListener(this);
     }
 
 }

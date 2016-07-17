@@ -20,7 +20,6 @@ public class ListBeerAdapter extends BaseAdapter {
     private Context context;
     private BeerRepo entry;
     private List<BeerRepo> listOfBeers;
-    //test push
 
 
     public ListBeerAdapter() {

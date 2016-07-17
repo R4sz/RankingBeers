@@ -1,7 +1,5 @@
 package com.rank.beer.rankingbeers.db;
 
-import android.widget.EditText;
-
 import com.rank.beer.rankingbeers.R;
 
 /**
@@ -28,7 +26,6 @@ public enum DbFields {
     private String displayType = DEFAULT_DISPLAY_TYPE;
 
     static final String OPTIONS_TEXT = "TEXT";
-    static final String OPTIONS_INTEGER = "INTEGER";
     static final String OPTIONS_DOUBLE = "DOUBLE";
     static final String OPTIONS_LONG = "LONG";
     static final String OPTIONS_BLOB = "BLOB";

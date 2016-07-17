@@ -31,13 +31,14 @@ public class BeerDetailsActivity extends AppCompatActivity {
     private void initElements() {
         Map<String, View> txtViewData = new HashMap<>();
         for (DbFields dbf : DbFields.values()) {
-            txtViewData.put(dbf.toString(), (View) findViewById(dbf.getViewId()));
+            txtViewData.put(dbf.toString(), findViewById(dbf.getViewId()));
         }
         Intent ListBeer = getIntent();
         String query = "SELECT * from beers where id = ?";
         fillView(query.replace("?", ListBeer.getStringExtra("id")), txtViewData);
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private void fillView(String query, Map<String, View> txtViewData) {
         Cursor cr = null;
         DbHelper dbHelp;
@@ -60,6 +61,9 @@ public class BeerDetailsActivity extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             dbHelp.close();
+            if(cr != null) {
+                cr.close();
+            }
         }
     }
 

@@ -46,18 +46,22 @@ public class ListBeerActivity extends AppCompatActivity {
     }
 
     private List<BeerRepo> getListViewData(String query) {
-        List<BeerRepo> listOfBeers = new ArrayList<BeerRepo>();
+        List<BeerRepo> listOfBeers = new ArrayList<>();
 
         DbHelper dbHelp;
         dbHelp = new DbHelper(this);
+        Cursor cr = null;
         try {
             SQLiteDatabase bd = dbHelp.getReadableDatabase();
-            Cursor cr = bd.rawQuery(query, null);
+            cr = bd.rawQuery(query, null);
             while (cr.moveToNext()) {
                 listOfBeers.add(new BeerRepo(cr));
             }
         } finally {
             dbHelp.close();
+            if (cr != null) {
+                cr.close();
+            }
         }
 
         return listOfBeers;
