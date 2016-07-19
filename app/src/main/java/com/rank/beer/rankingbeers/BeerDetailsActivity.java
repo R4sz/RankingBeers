@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.rank.beer.rankingbeers.db.DbFields;
 import com.rank.beer.rankingbeers.db.DbHelper;
+import com.rank.beer.rankingbeers.db.DbQueries;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,15 +28,17 @@ public class BeerDetailsActivity extends AppCompatActivity {
         initElements();
     }
 
-    //TODO move initElemements and AddBeeActivity.initFields to static common util class
     private void initElements() {
+        Intent ListBeer = getIntent();
+        fillView(DbQueries.GET_BEERS_BY_ID.replace("?", ListBeer.getStringExtra("id")), getViewIds());
+    }
+
+    private Map<String, View> getViewIds() {
         Map<String, View> txtViewData = new HashMap<>();
         for (DbFields dbf : DbFields.values()) {
             txtViewData.put(dbf.toString(), findViewById(dbf.getViewId()));
         }
-        Intent ListBeer = getIntent();
-        String query = "SELECT * from beers where id = ?";
-        fillView(query.replace("?", ListBeer.getStringExtra("id")), txtViewData);
+        return txtViewData;
     }
 
     @SuppressWarnings("TryFinallyCanBeTryWithResources")
