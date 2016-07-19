@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BeerDetailsActivity extends AppCompatActivity {
+
+    private Drawable layoutDrawable;
+    private boolean imageScaled;
+    private LinearLayout layout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,7 @@ public class BeerDetailsActivity extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             dbHelp.close();
-            if(cr != null) {
+            if (cr != null) {
                 cr.close();
             }
         }
@@ -74,6 +80,28 @@ public class BeerDetailsActivity extends AppCompatActivity {
         return BitmapFactory.decodeByteArray(blobArray, 0, blobArray.length);
 
 
+    }
+
+    public void onImageClick(View v) {
+        if (layout == null) {
+            setLinearLayout();
+        }
+        final ImageView img1 = (ImageView) findViewById(R.id.photo);
+        layoutDrawable = layout.getBackground();
+        layout.setBackground(img1.getDrawable());
+        imageScaled = true;
+    }
+
+    public void photoExit(View v) {
+        if (imageScaled) {
+            Toast.makeText(this, "exit from photo", Toast.LENGTH_LONG).show();
+            layout.setBackground(layoutDrawable);
+            imageScaled = false;
+        }
+    }
+
+    private void setLinearLayout() {
+        layout = (LinearLayout) findViewById(R.id.detailsLayer);
     }
 
 }
