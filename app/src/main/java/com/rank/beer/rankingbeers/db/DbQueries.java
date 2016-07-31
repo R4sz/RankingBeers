@@ -5,5 +5,7 @@ package com.rank.beer.rankingbeers.db;
  */
 public class DbQueries {
     public static final String GET_BEERS_BY_ID = "SELECT * from beers where id = ?";
-    public static final String GET_BEERS_FOR_LIST = "SELECT id, beerName, price, composition, alcContent FROM beers";
+
+    //TODO decrease numbers of arguments + repo for list !
+    public static final String GET_BEERS_FOR_LIST = "SELECT id, beerName, price, composition, alcContent, photo FROM beers";
 }

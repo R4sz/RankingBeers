@@ -1,6 +1,7 @@
 package com.rank.beer.rankingbeers.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,12 @@ public class ListBeerAdapter extends BaseAdapter {
         }
 
         ImageView iv = (ImageView) convertView.findViewById(R.id.list_avatar);
-        iv.setImageResource(R.mipmap.beer_bottle_default);
+        Bitmap photo = entry.getPhoto();
+        if (null != photo) {
+            iv.setImageBitmap(photo);
+        } else {
+            iv.setImageResource(R.mipmap.beer_bottle_default);
+        }
 
         TextView name = (TextView) convertView.findViewById(R.id.beerNameOnList);
         name.setText(entry.getName());

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 import com.rank.beer.rankingbeers.db.DbFields;
 import com.rank.beer.rankingbeers.db.DbHelper;
 import com.rank.beer.rankingbeers.db.DbQueries;
+import com.rank.beer.rankingbeers.utils.BeerUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +60,7 @@ public class BeerDetailsActivity extends AppCompatActivity {
                     if (dbf.getType().equals(DbFields.DEFAULT_DISPLAY_TYPE)) {
                         ((TextView) txtViewData.get(dbf.toString())).setText(cr.getString(cr.getColumnIndex(dbf.toString())));
                     } else {
-                        Bitmap bm = initPhoto(cr.getBlob(cr.getColumnIndex(dbf.toString())));
+                        Bitmap bm = BeerUtil.initPhoto(cr.getBlob(cr.getColumnIndex(dbf.toString())));
                         ((ImageView) txtViewData.get(dbf.toString())).setImageBitmap(bm);
                     }
                 }
@@ -74,12 +74,6 @@ public class BeerDetailsActivity extends AppCompatActivity {
                 cr.close();
             }
         }
-    }
-
-    private Bitmap initPhoto(byte[] blobArray) {
-        return BitmapFactory.decodeByteArray(blobArray, 0, blobArray.length);
-
-
     }
 
     public void onImageClick(View v) {
