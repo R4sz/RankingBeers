@@ -76,4 +76,8 @@ public class ListBeerAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public List<BeerRepo> getData() {
+        return listOfBeers;
+    }
 }

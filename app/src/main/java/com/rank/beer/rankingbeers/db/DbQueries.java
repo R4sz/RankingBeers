@@ -8,4 +8,6 @@ public class DbQueries {
 
     //TODO decrease numbers of arguments + repo for list !
     public static final String GET_BEERS_FOR_LIST = "SELECT id, beerName, price, composition, alcContent, photo FROM beers";
+    public static final String DELETE_ITEM = "DELETE from beers WHERE id = ?";
+
 }
