@@ -1,10 +1,12 @@
 package com.rank.beer.rankingbeers.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rank.beer.rankingbeers.R;
@@ -50,6 +52,14 @@ public class ListBeerAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.beer_listing, null);
+        }
+
+        ImageView iv = (ImageView) convertView.findViewById(R.id.list_avatar);
+        Bitmap photo = entry.getPhoto();
+        if (null != photo) {
+            iv.setImageBitmap(photo);
+        } else {
+            iv.setImageResource(R.mipmap.beer_bottle_default);
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.beerNameOnList);

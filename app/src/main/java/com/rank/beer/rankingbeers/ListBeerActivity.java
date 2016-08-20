@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.rank.beer.rankingbeers.adapter.ListBeerAdapter;
 import com.rank.beer.rankingbeers.db.DbHelper;
+import com.rank.beer.rankingbeers.db.DbQueries;
 import com.rank.beer.rankingbeers.repo.BeerRepo;
 
 import java.util.ArrayList;
@@ -18,13 +19,12 @@ import java.util.List;
 
 public class ListBeerActivity extends AppCompatActivity {
 
-    private static final String BEER_LIST_QUERY = "SELECT id, beerName, price, composition, alcContent FROM beers";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_beer);
-        initListView(getListViewData(BEER_LIST_QUERY));
+        initListView(getListViewData(DbQueries.GET_BEERS_FOR_LIST));
     }
 
 
@@ -46,18 +46,22 @@ public class ListBeerActivity extends AppCompatActivity {
     }
 
     private List<BeerRepo> getListViewData(String query) {
-        List<BeerRepo> listOfBeers = new ArrayList<BeerRepo>();
+        List<BeerRepo> listOfBeers = new ArrayList<>();
 
         DbHelper dbHelp;
         dbHelp = new DbHelper(this);
+        Cursor cr = null;
         try {
             SQLiteDatabase bd = dbHelp.getReadableDatabase();
-            Cursor cr = bd.rawQuery(query, null);
+            cr = bd.rawQuery(query, null);
             while (cr.moveToNext()) {
                 listOfBeers.add(new BeerRepo(cr));
             }
         } finally {
             dbHelp.close();
+            if (cr != null) {
+                cr.close();
+            }
         }
 
         return listOfBeers;
