@@ -36,15 +36,7 @@ public class BeerDetailsActivity extends AppCompatActivity {
 
     private void initElements() {
         Intent ListBeer = getIntent();
-        fillView(DbQueries.GET_BEERS_BY_ID.replace("?", ListBeer.getStringExtra("id")), getViewIds());
-    }
-
-    private Map<String, View> getViewIds() {
-        Map<String, View> txtViewData = new HashMap<>();
-        for (DbFields dbf : DbFields.values()) {
-            txtViewData.put(dbf.toString(), findViewById(dbf.getViewId()));
-        }
-        return txtViewData;
+        fillView(DbQueries.GET_BEERS_BY_ID.replace("?", ListBeer.getStringExtra("id")), BeerUtil.initFields(this));
     }
 
     @SuppressWarnings("TryFinallyCanBeTryWithResources")

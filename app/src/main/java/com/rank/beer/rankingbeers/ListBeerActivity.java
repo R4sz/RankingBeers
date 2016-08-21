@@ -92,6 +92,9 @@ public class ListBeerActivity extends AppCompatActivity {
 
         switch (menuItemIndex) {
             case EDIT:
+                Intent editActivity = new Intent(this, AddBeerActivity.class);
+                editActivity.putExtra("idToEdit", getEntryId(info.position));
+                startActivityForResult(editActivity, 0);
                 break;
 
             case DELETE:

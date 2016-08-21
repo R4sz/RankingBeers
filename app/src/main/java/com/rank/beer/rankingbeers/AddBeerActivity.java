@@ -2,6 +2,7 @@ package com.rank.beer.rankingbeers;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
@@ -10,33 +11,83 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rank.beer.rankingbeers.db.DbFields;
 import com.rank.beer.rankingbeers.db.DbHelper;
+import com.rank.beer.rankingbeers.db.DbQueries;
+import com.rank.beer.rankingbeers.utils.BeerUtil;
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 public class AddBeerActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String LISTVIEW_ACTIVITY = ".ListBeerActivity";
     private byte[] bmpArray;
+    private boolean editMode = false;
+    private String editingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
+        checkIfEditMode();
+
+
         initPhoto(null);
     }
 
-    private Map<String, View> initFields() {
-        Map<String, View> editTxtData = new HashMap<>();
-        for (DbFields dbf : DbFields.values()) {
-            editTxtData.put(dbf.toString(), findViewById(dbf.getViewId()));
+    private void checkIfEditMode() {
+        if (null != getCallingActivity()) {
+            String callingClassName = getCallingActivity().getShortClassName();
+            if (callingClassName != null && callingClassName.equals(LISTVIEW_ACTIVITY)) {
+                editMode = true;
+                handleEditMode();
+            }
         }
-        return editTxtData;
     }
+
+    private void handleEditMode() {
+        Intent editActivity = getIntent();
+        editingId = (String) editActivity.getExtras().get("idToEdit");
+        if (editingId != null) {
+
+            Map<String, View> fields = BeerUtil.initFields(this);
+
+
+            Cursor cr = null;
+            DbHelper dbHelp;
+            dbHelp = new DbHelper(this);
+            try {
+                SQLiteDatabase bd = dbHelp.getReadableDatabase();
+                cr = bd.rawQuery(DbQueries.GET_BEERS_BY_ID.replace("?", editingId), null);
+                while (cr.moveToNext()) {
+                    for (DbFields dbf : DbFields.values()) {
+                        if (dbf.getType().equals(DbFields.DEFAULT_DISPLAY_TYPE)) {
+                            ((TextView) fields.get(dbf.toString())).setText(cr.getString(cr.getColumnIndex(dbf.toString())));
+                        } else {
+                             Bitmap bm = BeerUtil.initPhoto(cr.getBlob(cr.getColumnIndex(dbf.toString())));
+                            ((ImageView) fields.get(dbf.toString())).setImageBitmap(bm);
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            } finally {
+                dbHelp.close();
+                if (cr != null) {
+                    cr.close();
+                }
+            }
+
+
+        }
+    }
+
 
     private void initPhoto(Bitmap bmap) {
         ImageView iv = (ImageView) findViewById(R.id.photo);
@@ -75,8 +126,14 @@ public class AddBeerActivity extends AppCompatActivity {
                 values.put(dbf.toString(), bmpArray);
             }
         }
-        bd.insertOrThrow(DbHelper.BEERS_TABLE_NAME, null, values);
-        finish();
+        if (editMode) {
+
+            bd.update(DbHelper.BEERS_TABLE_NAME, values, "id = " + editingId, null);
+            finish();
+        } else {
+            bd.insertOrThrow(DbHelper.BEERS_TABLE_NAME, null, values);
+            finish();
+        }
     }
 
 
@@ -89,7 +146,7 @@ public class AddBeerActivity extends AppCompatActivity {
     }
 
     public void save(View v) {
-        saveAndExit(initFields());
+        saveAndExit(BeerUtil.initFields(this));
     }
 
     public void cancel(View v) {
